@@ -1,0 +1,85 @@
+.square {
+    background: #fff;
+    border: 1px solid #999;
+    font-size: 24px;
+    font-weight: bold;
+    height: 60px;
+    padding: 0;
+    text-align: center;
+    width: 60px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.upload-section {
+    margin: 0 auto; /* Центрирование по горизонтали */
+    width: 80%;
+    max-width: 500px;
+    gap: 10px;
+}
+
+h1 {
+    display: flex
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column; /* Элементы будут располагаться в столбец */
+    align-items: center; /* Центрирование по горизонтали */
+    justify-content: center; /* Центрирование по вертикали */
+    min-height: 100vh;
+    background-color: #f0f0f0; /* Светло-серый фон для всего приложения */
+    overflow: visible;
+}
+
+.box-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column; /* Элементы будут располагаться в столбец */
+    align-items: center; /* Центрирование по горизонтали */
+    background: #a09beb;
+    background: linear-gradient(90deg, rgba(160, 155, 235, 1) 0%, rgba(250, 250, 250, 1) 67%, rgba(177, 219, 227, 1) 100%);
+    border-radius: 15px; /* Скругление углов: 15 пикселей */
+    margin-bottom: 20px;
+    border: 2px solid darkblue; /* Обрамление: 2px толщиной, сплошное, темно-синего цвета */
+    padding-bottom: 20px; /* Отступ снизу: 20 пикселей */
+}
+
+.box-container2 {
+    width: 500px;
+    gap: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; /* Элементы будут располагаться в столбец */
+    align-items: center; /* Центрирование по горизонтали */
+    background: #EEAECA;
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    border-radius: 15px; /* Скругление углов: 15 пикселей */
+    border: 2px solid darkblue; /* Обрамление: 2px толщиной, сплошное, темно-синего цвета */
+    padding-bottom: 20px; /* Отступ снизу: 20 пикселей */
+}
+
+
+.upload-section {
+    display: flex;
+    flex-direction: column; /* Элементы будут располагаться в столбец */
+    align-items: center; /* Центрирование по горизонтали */ /* Сдвинуть вниз на 20px относительно h1 и предыдущего контента */
+}
+
+.button-container {
+    display: flex;
+    gap: 10px; /* Расстояние между кнопками */
+}
+
+.preview-section {
+    border-radius: 15px; /* Скругление углов: 15 пикселей */
+    border: 2px yellow; /* Обрамление: 2px толщиной, сплошное, темно-синего цвета */
+}
+
+.my-text {
+    font-family: cursive;
+}
