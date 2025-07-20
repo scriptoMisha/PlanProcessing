@@ -12,7 +12,7 @@ function SaveBar({ jsonData, handleDownloadJson, handleDownloadZip, imagesBase64
     setPreviewImage(null);
   };
 
-  // Добавляем обработчик клавиши Esc
+  // Esc key handler
   useEffect(() => {
     const handleEscKey = (event) => {
       if (event.key === 'Escape' && previewImage) {
@@ -20,12 +20,13 @@ function SaveBar({ jsonData, handleDownloadJson, handleDownloadZip, imagesBase64
       }
     };
 
-    // Добавляем обработчик события только когда изображение открыто
+    // Handler active only when preview is opened
     if (previewImage) {
       document.addEventListener('keydown', handleEscKey);
     }
 
-    // Очищаем обработчик при размонтировании компонента или закрытии превью
+    // clean up handler when
+    // Clearing the handler when unmounting the component or closing the preview
     return () => {
       document.removeEventListener('keydown', handleEscKey);
     };

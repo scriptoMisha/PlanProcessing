@@ -2,7 +2,7 @@ import React from 'react';
 
 function SideBar() {
     const handleHomeClick = () => {
-        window.location.reload(); // Простой способ вернуться к начальному состоянию
+        window.location.reload();
     };
 
     return (

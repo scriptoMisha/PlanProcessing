@@ -1,15 +1,15 @@
 html, body, #root {
-  height: 100%; /* Устанавливаем высоту на 100% */
-  width: 100%; /* Устанавливаем ширину на 100% */
-  margin: 0; /* Убираем отступы */
-  padding: 0; /* Убираем внутренние отступы */
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   font-family: cursive;
-  box-sizing: border-box; /* Важно для контроля размеров */
-  background-color: #f0f0f0; /* Светло-серый фон */
+  box-sizing: border-box;
+  background-color: #f0f0f0;
 }
 
 * {
-  margin: 0; /* Убираем отступы для всех элементов */
-  padding: 0; /* Убираем внутренние отступы для всех элементов */
-  box-sizing: border-box; /* Устанавливаем box-sizing для всех элементов */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
