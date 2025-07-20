@@ -1,85 +1,303 @@
-.square {
-    background: #fff;
-    border: 1px solid #999;
-    font-size: 24px;
-    font-weight: bold;
-    height: 60px;
-    padding: 0;
-    text-align: center;
-    width: 60px;
+/* Глобальный сброс и базовые стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-size: 14px;
 }
 
-.upload-section {
-    margin: 0 auto; /* Центрирование по горизонтали */
-    width: 80%;
-    max-width: 500px;
-    gap: 10px;
-}
-
-h1 {
-    display: flex
-}
-
+/* Основной контейнер приложения */
 .app-container {
-    display: flex;
-    flex-direction: column; /* Элементы будут располагаться в столбец */
-    align-items: center; /* Центрирование по горизонтали */
-    justify-content: center; /* Центрирование по вертикали */
-    min-height: 100vh;
-    background-color: #f0f0f0; /* Светло-серый фон для всего приложения */
-    overflow: visible;
+  display: flex;
+  min-height: 100vh;
+  background-color: #ffffff;
 }
 
-.box-container {
-    width: 50%;
-    display: flex;
-    flex-direction: column; /* Элементы будут располагаться в столбец */
-    align-items: center; /* Центрирование по горизонтали */
-    background: #a09beb;
-    background: linear-gradient(90deg, rgba(160, 155, 235, 1) 0%, rgba(250, 250, 250, 1) 67%, rgba(177, 219, 227, 1) 100%);
-    border-radius: 15px; /* Скругление углов: 15 пикселей */
-    margin-bottom: 20px;
-    border: 2px solid darkblue; /* Обрамление: 2px толщиной, сплошное, темно-синего цвета */
-    padding-bottom: 20px; /* Отступ снизу: 20 пикселей */
+/* Боковая панель */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
 }
 
-.box-container2 {
-    width: 500px;
-    gap: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column; /* Элементы будут располагаться в столбец */
-    align-items: center; /* Центрирование по горизонтали */
-    background: #EEAECA;
-    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-    border-radius: 15px; /* Скругление углов: 15 пикселей */
-    border: 2px solid darkblue; /* Обрамление: 2px толщиной, сплошное, темно-синего цвета */
-    padding-bottom: 20px; /* Отступ снизу: 20 пикселей */
+/* Основной контент */
+.content-container {
+  flex: 1;
+  margin-left: 250px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
 }
 
-
-.upload-section {
-    display: flex;
-    flex-direction: column; /* Элементы будут располагаться в столбец */
-    align-items: center; /* Центрирование по горизонтали */ /* Сдвинуть вниз на 20px относительно h1 и предыдущего контента */
+/* Обертка для контента */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.button-container {
-    display: flex;
-    gap: 10px; /* Расстояние между кнопками */
+/* Контейнер для Preview */
+.preview-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
 }
 
-.preview-section {
-    border-radius: 15px; /* Скругление углов: 15 пикселей */
-    border: 2px yellow; /* Обрамление: 2px толщиной, сплошное, темно-синего цвета */
+/* Контейнер для SaveBar */
+.savebar-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
 }
 
-.my-text {
-    font-family: cursive;
+/* Стили для Preview компонента */
+.preview-upload-area {
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.preview-upload-area:hover {
+  border-color: #007bff;
+  background-color: #e7f3ff;
+}
+
+.preview-upload-area.drag-active {
+  border-color: #007bff;
+  background-color: #e7f3ff;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin: 20px auto;
+  display: block;
+}
+
+.upload-text {
+  color: #6c757d;
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.upload-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+}
+
+.upload-button:hover {
+  background-color: #0056b3;
+}
+
+.upload-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.process-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.process-button:hover {
+  background-color: #218838;
+}
+
+.process-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Стили для SaveBar компонента */
+.savebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.download-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.download-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-button:hover {
+  background-color: #0056b3;
+}
+
+.download-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.download-button.json {
+  background-color: #6f42c1;
+  color: white;
+}
+
+.download-button.json:hover {
+  background-color: #5a32a3;
+}
+
+/* Загрузчик */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Унифицированные размеры шрифтов */
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+p, span, div, button, a, li {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Стили для JSON результата */
+.json-result-container {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  overflow-x: auto;
+  max-height: 300px;
+}
+
+.json-result-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.json-result-content {
+  font-size: 12px;
+  color: #6c757d;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: 'Courier New', monospace;
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .content-container {
+    margin-left: 200px;
+    padding: 15px;
+  }
+
+  .preview-container,
+  .savebar-container {
+    padding: 20px;
+  }
+
+  .download-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 580px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .content-container {
+    margin-left: 0;
+  }
 }

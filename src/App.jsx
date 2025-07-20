@@ -1,39 +1,21 @@
 import React, {useState} from 'react';
 import JSZip from "jszip";
-import ImagesList from "./ImageList.jsx";
 import './App.css';
-import Preview from "./Preview.jsx";
-import SideBar from "./SideBar.jsx";
-import SaveBar from "./SaveBar.jsx";
+import Preview from "./components/Preview.jsx";
+import SideBar from "./components/SideBar.jsx";
+import SaveBar from "./components/SaveBar.jsx";
 
 function App() {
     const [image, setImage] = useState(null);
-    const [error, setError] = useState(null);
     const [jsonData, setJsonData] = useState(null);
     const [imagesBase64, setImagesBase64] = useState(null);
+    const [isLoading, setIsLoading] = useState(false); // State for loading indicator
 
-    // Обработчик изменения файла в input
-    // const handleImageChange = (e) => {
-    //     const file = e.target.files[0]; // Вытаскиваем выбранный файл из DOM эл-та <input>...</input>
-    //     if (!file) return;
-    //
-    //     // Создаем превью для отображения
-    //     // Обработчик окончания чтения
-    //     const reader = new FileReader();
-    //     reader.onloadend = () => {
-    //         // После окончания чтения файл будет лежать в image в формате base64
-    //         setImage(reader.result);
-    //     };
-    //     reader.readAsDataURL(file);
-    // };
-    //
-    // // Отправка изображения на сервер
     const handleSubmit = async () => {
         if (!image) return;
-        setError(null);
-
+        setIsLoading(true); // Start loading
         try {
-            // Отправляем на сервер FastAPI
+            // Sending data to FastAPI
             const response = await fetch('https://planprocess-back.onrender.com/process', {
                 method: 'POST',
                 headers: {
@@ -51,22 +33,16 @@ function App() {
             }
             const coordinatesJson = JSON.parse(data.metadata)
             const imagesBase64 = data.images;
-            // console.log("Получено с сервера0:", imagesBase64);
-            // console.log("Получено с сервера1:", coordinatesJson);
             setImagesBase64(imagesBase64);
-            //здесь result это уже json строка
             setJsonData(coordinatesJson);
         } catch (err) {
-            setError(err.message);
             console.error(err);
-
         } finally {
-            setLoading(false);
-
+            setIsLoading(false); // Stop loading
         }
     };
 
-    // Функционал кнопки загрузки архива
+    // Button of downloading zip
     const handleDownloadZip = async () => {
         const zip = new JSZip();
 
@@ -74,7 +50,7 @@ function App() {
         zip.file("data.json", JSON.stringify(jsonData, null, 2));
 
         imagesBase64.forEach((base64Str, i) => {
-            const ext = "jpg"; // дефолтное расширение
+            const ext = "jpg"; // Default extension
             zip.file(`image_${i + 1}.${ext}`, base64Str, {base64: true});
         });
 
@@ -90,52 +66,32 @@ function App() {
     };
 
 
-    // const createDownloadLink = (data) => {
-    //     if (!data) return;
-    //     const jsonString = JSON.stringify(data, null, 2);
-    //     const blob = new Blob([jsonString], {type: 'application/json'});
-    //     const url = URL.createObjectURL(blob);
-    //     setDownloadUrl(url);
-    //
-    //     return () => URL.revokeObjectURL(url);
-    // };
-    //
-    // React.useEffect(() => {
-    //     if (downloadUrl) {
-    //         return () => {
-    //             URL.revokeObjectURL(downloadUrl);
-    //         };
-    //     }
-    //
-    // }, [downloadUrl]);
-
     const handleDownloadJson = () => {
-        const jsonString = JSON.stringify(jsonData, null, 2); // Преобразуем объект в JSON
-        const blob = new Blob([jsonString], {type: "application/json"}); // Создаем Blob
-        const url = URL.createObjectURL(blob); // Генерируем временную ссылку
+        const jsonString = JSON.stringify(jsonData, null, 2); // Convert object to JSON
+        const blob = new Blob([jsonString], {type: "application/json"}); // Blob creating
+        const url = URL.createObjectURL(blob); // Generating a temporary link
 
         const a = document.createElement("a");
         a.href = url;
-        a.download = "data.json"; // Имя скачиваемого файла
+        a.download = "data.json"; // The name of the downloaded file
         a.click();
 
-        URL.revokeObjectURL(url); // Освобождаем память
+        URL.revokeObjectURL(url); // Freeing up memory
     };
 
     return (
-        <div className="flex min-h-screen bg-gray-100">
-            <aside className="w-64 flex-shrink-0 bg-white h-screen fixed top-0 left-0">
+        <div className="app-container">
+            <aside className="sidebar">
                 <SideBar/>
             </aside>
 
-            <div className="flex-grow ml-64 flex justify-center items-stretch px-6 py-8">
-                <div className="flex items-stretch max-w-6xl w-full gap-x-6 min-h-[500px]">
-                    <div
-                        className="flex-grow bg-white rounded-lg shadow-md py-6 px-4 flex flex-col justify-center h-full">
-                        <Preview imgCallback={setImage} uplCallback={handleSubmit}/>
+            <div className="content-container">
+                <div className="content-wrapper">
+                    <div className="preview-container">
+                        <Preview imgCallback={setImage} uplCallback={handleSubmit} isLoading={isLoading} />
                     </div>
 
-                    <div className="w-80 bg-white rounded-lg shadow-md py-6 px-4 ml-4 self-stretch h-full">
+                    <div className="savebar-container">
                         <SaveBar
                             jsonData={jsonData}
                             handleDownloadJson={handleDownloadJson}
