@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImagesList from "./ImageList.jsx";
 
-function SaveBar({ jsonData, handleDownloadJson, handleDownloadZip, imagesBase64 }) {
+function SaveBar({ jsonData, handleDownloadJson, handleDownloadZip, imagesBase64,pageNumber=1}) {
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleImageClick = (base64) => {
@@ -32,7 +32,8 @@ function SaveBar({ jsonData, handleDownloadJson, handleDownloadZip, imagesBase64
     };
   }, [previewImage]);
 
-  const hasData = jsonData && imagesBase64;
+
+  const hasData = jsonData;
 
   return (
     <div className="savebar-content">
@@ -54,18 +55,21 @@ function SaveBar({ jsonData, handleDownloadJson, handleDownloadZip, imagesBase64
               📄 Download JSON
             </button>
 
-            <button
+            {pageNumber ===1 ? (<button
               onClick={handleDownloadZip}
               className="download-button"
             >
               📦 Download ZIP Archive
-            </button>
+            </button>): null}
           </div>
 
           <div style={{ marginTop: '15px', padding: '15px', backgroundColor: '#f8f9fa', borderRadius: '6px', border: '1px solid #e9ecef' }}>
             <p style={{ fontSize: '12px', color: '#6c757d', margin: 0 }}>
-              <strong>JSON:</strong> contains coordinates and metadata<br />
+              <strong>JSON:</strong> below is the Json content<br />
+              {pageNumber===1?(
+                  <>
               <strong>ZIP:</strong> includes all images and JSON file
+              </>): null}
             </p>
           </div>
         </div>
@@ -89,7 +93,8 @@ function SaveBar({ jsonData, handleDownloadJson, handleDownloadZip, imagesBase64
         </div>
       )}
 
-      <ImagesList imagesBase64={imagesBase64} onImageClick={handleImageClick} />
+        {pageNumber===1?(
+      <ImagesList imagesBase64={imagesBase64} onImageClick={handleImageClick} />): null}
 
       {previewImage && (
         <div
